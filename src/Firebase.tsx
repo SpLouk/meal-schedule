@@ -1,5 +1,5 @@
 import { singletonGetter } from "./singletonGetter";
-import * as firebase from "firebase";
+import firebase from "firebase";
 import { observable } from "mobx";
 
 const firebaseConfig = {
@@ -13,13 +13,13 @@ const firebaseConfig = {
 };
 
 export class Firebase {
-  get = singletonGetter(Firebase);
-
   @observable
-  firestore: firebase.firestore.Firestore | undefined = undefined;
+  firestore: firebase.firestore.Firestore;
 
   constructor() {
     firebase.initializeApp(firebaseConfig);
     this.firestore = firebase.firestore();
   }
 }
+
+export const getFirebase = singletonGetter(Firebase);

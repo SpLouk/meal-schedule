@@ -1,6 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import Colours from "./lib/Colours";
+import { getMealStore } from "./MealStore";
+import { observer } from "mobx-react";
+import "./App.css";
 
 const ViewportWrapper = styled.div`
   position: fixed;
@@ -22,16 +25,29 @@ const Header = styled.header`
   justify-content: center;
 `;
 
-const Title = styled.h1`
-  font-family: sans-serif;
+const Content = styled.main`
+  display: flex;
 `;
 
-export const App: React.FC = () => {
+const Title = styled.h1`
+  font-family: sans-serif;
+  font-weight: 200;
+`;
+
+export const App: React.FC = observer(() => {
+  const meals = getMealStore().meals;
   return (
     <ViewportWrapper>
       <Header>
         <Title>Fridgefort Meal Schedule</Title>
       </Header>
+      <Content>
+        <ul>
+          {meals.map((meal) => (
+            <li>{meal.name}</li>
+          ))}
+        </ul>
+      </Content>
     </ViewportWrapper>
   );
-};
+});
