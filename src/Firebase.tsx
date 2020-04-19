@@ -1,6 +1,6 @@
-import { singletonGetter } from "./singletonGetter";
 import firebase from "firebase";
 import { observable } from "mobx";
+import { createContext } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJGCUEZiQnLggmg2hKYMFU5TRj_26FDgc",
@@ -12,14 +12,6 @@ const firebaseConfig = {
   appId: "1:808438742383:web:cbf448b9608199321d3c9a",
 };
 
-export class Firebase {
-  @observable
-  firestore: firebase.firestore.Firestore;
+firebase.initializeApp(firebaseConfig);
 
-  constructor() {
-    firebase.initializeApp(firebaseConfig);
-    this.firestore = firebase.firestore();
-  }
-}
-
-export const getFirebase = singletonGetter(Firebase);
+export const Firestore = firebase.firestore();

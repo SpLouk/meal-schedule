@@ -1,24 +1,30 @@
-import { singletonGetter } from "./singletonGetter";
 import { observable } from "mobx";
-import { getFirebase } from "./Firebase";
-import {Meal} from "./types/Meal";
+import { Firestore } from "./Firebase";
+import { IMeal } from "./types/IMeal";
+import { createContext } from "react";
 
-class MealStore {
+export class MealStore {
   @observable
-  firestore = getFirebase().firestore;
+  collection = Firestore.collection("meals");
 
   @observable
-  meals: Meal[] = [];
+  meals: IMeal[] = [];
 
   constructor() {
     this.fetchMeals();
   }
 
   fetchMeals = async () => {
-    const snapshot = await this.firestore.collection("meals").get();
-    this.meals = snapshot.docs.map(doc => doc.data() as Meal);
+    const snapshot = await this.collection.get();
+    this.meals = snapshot.docs.map((doc) => doc.data() as IMeal);
     return this.meals;
+  };
+
+  addMeal = async (meal: IMeal) => {
+    const res = await this.collection.add(meal);
+    
+    return res;
   };
 }
 
-export const getMealStore = singletonGetter(MealStore);
+export const MealStoreContext = createContext<MealStore>({} as MealStore);

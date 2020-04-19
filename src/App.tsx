@@ -1,9 +1,11 @@
 import * as React from "react";
 import styled from "styled-components";
 import Colours from "./lib/Colours";
-import { getMealStore } from "./MealStore";
+import { MealStore, MealStoreContext } from "./MealStore";
 import { observer } from "mobx-react";
 import "./App.css";
+import { MealList } from "./MealList";
+import { AddMeal } from "./AddMeal";
 
 const ViewportWrapper = styled.div`
   position: fixed;
@@ -11,22 +13,23 @@ const ViewportWrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
 `;
 
 const Header = styled.header`
-  background-color: ${Colours.lightBlue};
+  border-bottom: 1px solid ${Colours.lightBlue};
   color: ${Colours.slate};
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 80px;
 `;
 
 const Content = styled.main`
   display: flex;
+  flex: 1;
 `;
 
 const Title = styled.h1`
@@ -35,19 +38,19 @@ const Title = styled.h1`
 `;
 
 export const App: React.FC = observer(() => {
-  const meals = getMealStore().meals;
+  const mealStore = new MealStore();
   return (
-    <ViewportWrapper>
-      <Header>
-        <Title>Fridgefort Meal Schedule</Title>
-      </Header>
-      <Content>
-        <ul>
-          {meals.map((meal) => (
-            <li>{meal.name}</li>
-          ))}
-        </ul>
-      </Content>
-    </ViewportWrapper>
+    <MealStoreContext.Provider value={mealStore}>
+      <ViewportWrapper>
+        <Header>
+          <img src="fridge.svg" alt="" height={40} color={Colours.slate} />
+          <Title>Fridgefort Meal Schedule</Title>
+        </Header>
+        <Content>
+          <MealList />
+          <AddMeal />
+        </Content>
+      </ViewportWrapper>
+    </MealStoreContext.Provider>
   );
 });
