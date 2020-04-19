@@ -1,6 +1,4 @@
 import firebase from "firebase";
-import { observable } from "mobx";
-import { createContext } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJGCUEZiQnLggmg2hKYMFU5TRj_26FDgc",

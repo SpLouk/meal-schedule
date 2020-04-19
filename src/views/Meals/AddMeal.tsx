@@ -1,19 +1,19 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { useContext, useState } from "react";
-import { MealStoreContext } from "./MealStore";
-import { IMeal } from "./types/IMeal";
+import { MealStoreContext } from "../../stores/MealStore";
+import { IMeal } from "../../types/IMeal";
 import styled from "styled-components";
-import { IIngredient } from "./types/IIngredient";
-import { Row } from "./lib/Row";
-import { Typography } from "./lib/Typography";
-import { Column } from "./lib/Column";
-import { Input } from "./lib/Input";
-import Colours from "./lib/Colours";
+import { IIngredient } from "../../types/IIngredient";
+import { Row } from "../../lib/Row";
+import { Typography } from "../../lib/Typography";
+import { Column } from "../../lib/Column";
+import { Input } from "../../lib/Input";
+import colour from "../../lib/colour";
 
 const Form = styled.form`
   flex: 1;
-  background-color: ${Colours.lightBlue};
+  background-color: ${colour.lightBlue};
   display: flex;
   flex-direction: column;
   max-width: 900px;

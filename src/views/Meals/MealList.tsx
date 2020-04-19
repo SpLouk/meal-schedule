@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { MealStoreContext } from "./MealStore";
+import { MealStoreContext } from "../../stores/MealStore";
 import { observer } from "mobx-react";
 
 export const MealList: React.FC = observer(() => {

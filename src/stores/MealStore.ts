@@ -1,6 +1,6 @@
 import { observable } from "mobx";
 import { Firestore } from "./Firebase";
-import { IMeal } from "./types/IMeal";
+import { IMeal } from "../types/IMeal";
 import { createContext } from "react";
 
 export class MealStore {
@@ -22,7 +22,7 @@ export class MealStore {
 
   addMeal = async (meal: IMeal) => {
     const res = await this.collection.add(meal);
-    
+
     return res;
   };
 }

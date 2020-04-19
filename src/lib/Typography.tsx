@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Colours from "./Colours";
+import colour from "./colour";
 
 export const Typography = styled.p`
-  color: ${Colours.slate};
+  color: ${colour.slate};
   font-family: sans-serif;
   font-size: 12px;
   margin: 0;

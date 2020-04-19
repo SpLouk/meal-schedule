@@ -1,11 +1,15 @@
 import * as React from "react";
 import styled from "styled-components";
-import Colours from "./lib/Colours";
-import { MealStore, MealStoreContext } from "./MealStore";
+import colour from "./lib/colour";
+import { MealStore, MealStoreContext } from "./stores/MealStore";
 import { observer } from "mobx-react";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
 import "./App.css";
-import { MealList } from "./MealList";
-import { AddMeal } from "./AddMeal";
+import { MealList } from "./views/Meals/MealList";
+import { AddMeal } from "./views/Meals/AddMeal";
+import path from "./lib/path";
+import { createBrowserHistory } from "history";
+import {Meals} from "./views/Meals";
 
 const ViewportWrapper = styled.div`
   position: fixed;
@@ -19,8 +23,8 @@ const ViewportWrapper = styled.div`
 `;
 
 const Header = styled.header`
-  border-bottom: 1px solid ${Colours.lightBlue};
-  color: ${Colours.slate};
+  border-bottom: 1px solid ${colour.lightBlue};
+  color: ${colour.slate};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,18 +43,25 @@ const Title = styled.h1`
 
 export const App: React.FC = observer(() => {
   const mealStore = new MealStore();
+  const history = createBrowserHistory();
   return (
     <MealStoreContext.Provider value={mealStore}>
-      <ViewportWrapper>
-        <Header>
-          <img src="fridge.svg" alt="" height={40} color={Colours.slate} />
-          <Title>Fridgefort Meal Schedule</Title>
-        </Header>
-        <Content>
-          <MealList />
-          <AddMeal />
-        </Content>
-      </ViewportWrapper>
+      <Router history={history}>
+        <ViewportWrapper>
+          <Header>
+            <img src="/fridge.svg" alt="" height={40} color={colour.slate} />
+            <Title>Fridgefort Meal Schedule</Title>
+          </Header>
+          <Content>
+            <Switch>
+              <Route path={path.meals}>
+                <Meals />
+              </Route>
+              <Redirect to={path.meals} />
+            </Switch>
+          </Content>
+        </ViewportWrapper>
+      </Router>
     </MealStoreContext.Provider>
   );
 });
