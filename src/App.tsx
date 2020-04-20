@@ -5,11 +5,9 @@ import { MealStore, MealStoreContext } from "./stores/MealStore";
 import { observer } from "mobx-react";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import "./App.css";
-import { MealList } from "./views/Meals/MealList";
-import { AddMeal } from "./views/Meals/AddMeal";
 import path from "./lib/path";
 import { createBrowserHistory } from "history";
-import {Meals} from "./views/Meals";
+import { Meals } from "./views/Meals";
 
 const ViewportWrapper = styled.div`
   position: fixed;
@@ -20,6 +18,7 @@ const ViewportWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 const Header = styled.header`

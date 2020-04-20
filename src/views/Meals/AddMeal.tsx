@@ -50,6 +50,7 @@ export const AddMeal: React.FC = observer(() => {
     e.stopPropagation();
 
     const meal: IMeal = {
+      id: undefined,
       name,
       ingredients,
     };

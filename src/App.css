@@ -1,8 +1,28 @@
-* {
+body {
+  font-family: sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: sans-serif;
   font-weight: 200;
 }
 
 li {
   list-style: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
 }

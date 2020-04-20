@@ -1,6 +1,7 @@
-import {IIngredient} from "./IIngredient";
+import { IIngredient } from "./IIngredient";
 
 export interface IMeal {
+  id: string | undefined;
   name: string | undefined;
   ingredients: IIngredient[] | undefined;
 }
