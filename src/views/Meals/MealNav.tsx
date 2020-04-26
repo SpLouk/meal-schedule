@@ -7,13 +7,6 @@ import { Link, useLocation } from "react-router-dom";
 import path, { mealPath } from "../../lib/path";
 import colour from "../../lib/colour";
 
-const Nav = styled.nav`
-  position: sticky;
-  top: 0;
-  flex-basis: 300px;
-  border-right: 1px solid ${colour.lightBlue};
-`;
-
 const MealList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -34,27 +27,22 @@ export const MealNav: React.FC = observer(() => {
   const location = useLocation();
 
   return (
-    <Nav>
-      <MealList>
-        {meals.map((meal, index) => (
-          <li key={index}>
-            <NavLink
-              active={location.pathname === mealPath(meal.id!)}
-              to={mealPath(meal.id!)}
-            >
-              {meal.name}
-            </NavLink>
-          </li>
-        ))}
-        <li>
+    <MealList>
+      {meals.map((meal, index) => (
+        <li key={index}>
           <NavLink
-            active={location.pathname === path.newMeal}
-            to={path.newMeal}
+            active={location.pathname === mealPath(meal.id!)}
+            to={mealPath(meal.id!)}
           >
-            + New Meal
+            {meal.name}
           </NavLink>
         </li>
-      </MealList>
-    </Nav>
+      ))}
+      <li>
+        <NavLink active={location.pathname === path.newMeal} to={path.newMeal}>
+          + New Meal
+        </NavLink>
+      </li>
+    </MealList>
   );
 });

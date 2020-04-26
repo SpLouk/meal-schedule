@@ -8,6 +8,9 @@ import "./App.css";
 import path from "./lib/path";
 import { createBrowserHistory } from "history";
 import { Meals } from "./views/Meals";
+import { MealNav } from "./views/Meals/MealNav";
+import { Row } from "./lib/Row";
+import { media } from "./lib/media";
 
 const ViewportWrapper = styled.div`
   height: 100vh;
@@ -35,6 +38,21 @@ const Title = styled.h1`
   font-weight: 200;
 `;
 
+const Nav = styled.nav`
+  position: sticky;
+  top: 0;
+  min-width: 300px;
+  border-right: 1px solid ${colour.lightBlue};
+  ${media.lessThan("tablet")`
+    display: none;
+  `}
+`;
+
+const ContentWrapper = styled(Row)`
+  flex: 1;
+  justify-content: center;
+`;
+
 export const App: React.FC = observer(() => {
   const mealStore = new MealStore();
   const history = createBrowserHistory();
@@ -47,12 +65,17 @@ export const App: React.FC = observer(() => {
             <Title>Fridgefort Meal Schedule</Title>
           </Header>
           <Content>
-            <Switch>
-              <Route path={path.meals}>
-                <Meals />
-              </Route>
-              <Redirect to={path.meals} />
-            </Switch>
+            <Nav>
+              <MealNav />
+            </Nav>
+            <ContentWrapper>
+              <Switch>
+                <Route path={path.meals}>
+                  <Meals />
+                </Route>
+                <Redirect to={path.meals} />
+              </Switch>
+            </ContentWrapper>
           </Content>
         </ViewportWrapper>
       </Router>
