@@ -20,14 +20,17 @@ const Wrapper = styled.div`
   padding: 32px;
 `;
 
-const IngredientsWrapper = styled.div`
-  overflow: auto;
-  height: 300px;
+const IngredientsWrapper = styled.section`
+  width: 50%;
 `;
 
 const IngredientRow = styled(Row)`
   justify-content: space-between;
-  width: 50%;
+`;
+
+const IngredientsTitle = styled.h3`
+  border-bottom: 1px solid ${colour.black};
+  padding: 16px 0;
 `;
 
 const EditLink = styled(ButtonLink)`
@@ -51,8 +54,8 @@ export const ViewMeal: React.FC = observer(() => {
         <EditLink to={editMealPath(id!)}>Edit</EditLink>
       </Row>
 
-      <h3>Ingredients</h3>
       <IngredientsWrapper>
+        <IngredientsTitle>Ingredients</IngredientsTitle>
         {ingredients?.map((ingredient, index) => (
           <IngredientRow key={index}>
             <Typography>{ingredient.name}</Typography>

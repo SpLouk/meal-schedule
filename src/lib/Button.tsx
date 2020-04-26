@@ -13,8 +13,7 @@ const ButtonStyles = css`
   align-items: center;
 
   &:hover {
-    background: ${colour.black};
-    color: ${colour.white};
+    background: ${colour.lightBlue};
   }
 `;
 
