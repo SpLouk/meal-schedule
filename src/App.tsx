@@ -3,7 +3,7 @@ import styled from "styled-components";
 import colour from "./lib/colour";
 import { MealStore, MealStoreContext } from "./stores/MealStore";
 import { observer } from "mobx-react";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
+import { Link, Redirect, Route, Router, Switch } from "react-router-dom";
 import "./App.css";
 import path from "./lib/path";
 import { createBrowserHistory } from "history";
@@ -26,6 +26,12 @@ const Header = styled.header`
   align-items: center;
   justify-content: center;
   height: 80px;
+`;
+
+const HomeLink = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Content = styled.main`
@@ -61,8 +67,10 @@ export const App: React.FC = observer(() => {
       <Router history={history}>
         <ViewportWrapper>
           <Header>
-            <img src="/fridge.svg" alt="" height={40} color={colour.slate} />
-            <Title>Fridgefort Meal Schedule</Title>
+            <HomeLink to={path.home}>
+              <img src="/fridge.svg" alt="" height={40} color={colour.slate} />
+              <Title>Fridgefort Meal Schedule</Title>
+            </HomeLink>
           </Header>
           <Content>
             <Nav>
