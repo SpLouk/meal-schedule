@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { Row } from "../../lib/Row";
 import { Typography } from "../../lib/Typography";
 import colour from "../../lib/colour";
+import { ButtonLink } from "../../lib/Button";
+import { editMealPath } from "../../lib/path";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -28,15 +30,26 @@ const IngredientRow = styled(Row)`
   width: 50%;
 `;
 
+const EditLink = styled(ButtonLink)`
+  flex-basis: 100px;
+`;
+
+const MealName = styled.h2`
+  flex: 1;
+`;
+
 export const ViewMeal: React.FC = observer(() => {
   const { id } = useParams();
   const mealStore = useContext(MealStoreContext);
-  const meal = mealStore.getMeal(id!);
+  const meal = mealStore.mealsById[id!];
   const ingredients = meal?.ingredients;
 
   return (
     <Wrapper>
-      <h2>{meal?.name}</h2>
+      <Row>
+        <MealName>{meal?.name}</MealName>
+        <EditLink to={editMealPath(id!)}>Edit</EditLink>
+      </Row>
 
       <h3>Ingredients</h3>
       <IngredientsWrapper>

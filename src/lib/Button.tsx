@@ -8,6 +8,10 @@ const ButtonStyles = css`
   padding: 16px;
   text-align: center;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   &:hover {
     background: ${colour.black};
     color: ${colour.white};
@@ -20,5 +24,4 @@ export const Button = styled.button`
 
 export const ButtonLink = styled(Link)`
   ${ButtonStyles};
-  display: block;
 `;

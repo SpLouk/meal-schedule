@@ -14,7 +14,7 @@ export class MealStore {
   meals: IMeal[] = [];
 
   @computed
-  private get mealsById() {
+  get mealsById() {
     return keyBy(this.meals, "id");
   }
 
@@ -22,7 +22,7 @@ export class MealStore {
     this.fetchMeals();
   }
 
-  fetchMeals = async () => {
+  fetchMeals = async (): Promise<IMeal[]> => {
     const snapshot = await this.collection.get();
     this.meals = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -31,7 +31,7 @@ export class MealStore {
     return this.meals;
   };
 
-  addMeal = async (meal: IMeal) => {
+  addMeal = async (meal: IMeal): Promise<IMeal> => {
     delete meal.id;
     const res = await this.collection.add(meal);
     const doc = await res.get();
@@ -45,8 +45,12 @@ export class MealStore {
     return newMeal;
   };
 
-  getMeal = (id: string): IMeal | undefined => {
-    return this.mealsById[id];
+  updateMeal = async (meal: IMeal): Promise<IMeal> => {
+    const id = meal.id;
+    delete meal.id;
+    await this.collection.doc(id).update(meal);
+    await this.fetchMeals();
+    return this.mealsById[id!];
   };
 }
 

@@ -8,7 +8,7 @@ import { IIngredient } from "../../types/IIngredient";
 import { Row } from "../../lib/Row";
 import { Typography } from "../../lib/Typography";
 import { Column } from "../../lib/Column";
-import {Input, Select} from "../../lib/Input";
+import { Input, Select } from "../../lib/Input";
 import colour from "../../lib/colour";
 import { Button } from "../../lib/Button";
 import { INGREDIENT_UNITS } from "../../lib/consts";
@@ -51,27 +51,39 @@ function newIngredient(): IIngredient {
   };
 }
 
-export const AddMeal: React.FC = observer(() => {
+interface IProps {
+  meal: IMeal | undefined;
+  onSave: (meal: IMeal) => void | undefined;
+}
+
+export const MealForm: React.FC<IProps> = observer(({ meal, onSave }) => {
   const mealStore = useContext(MealStoreContext);
 
-  const [name, setName] = useState("");
-  const [ingredients, setIngredients] = useState<IIngredient[]>([
-    newIngredient(),
-    newIngredient(),
-    newIngredient(),
-  ]);
+  const [name, setName] = useState(meal?.name ?? "");
+  const [ingredients, setIngredients] = useState<IIngredient[]>(
+    meal?.ingredients ?? [newIngredient(), newIngredient(), newIngredient()]
+  );
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     e.stopPropagation();
 
-    const meal: IMeal = {
-      id: undefined,
-      name,
-      ingredients,
-    };
-
-    mealStore.addMeal(meal);
+    if (meal === undefined) {
+      const newMeal: IMeal = {
+        id: undefined,
+        name,
+        ingredients,
+      };
+      const result = await mealStore.addMeal(newMeal);
+      onSave(result);
+    } else {
+      const result = await mealStore.updateMeal({
+        ...meal,
+        name,
+        ingredients,
+      });
+      onSave(result);
+    }
   }
 
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -100,7 +112,7 @@ export const AddMeal: React.FC = observer(() => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <h2>Add a new meal</h2>
+      {meal === undefined ? <h2>Add a new meal</h2> : <h2>Edit {name}</h2>}
 
       <Column>
         <label htmlFor="name">
@@ -134,7 +146,7 @@ export const AddMeal: React.FC = observer(() => {
               </label>
               <Input
                 type="number"
-                step="0.01"
+                step="0.1"
                 name={`${index}.quantity`}
                 value={ingredient.quantity}
                 onChange={handleChangeIngredient}
@@ -147,7 +159,11 @@ export const AddMeal: React.FC = observer(() => {
               <Select name={`${index}.unit`} onChange={handleChangeIngredient}>
                 <option value=""></option>
                 {INGREDIENT_UNITS.map((unit) => (
-                  <option key={unit} value={unit}>
+                  <option
+                    key={unit}
+                    value={unit}
+                    selected={ingredient.unit === unit}
+                  >
                     {unit}
                   </option>
                 ))}
@@ -158,9 +174,9 @@ export const AddMeal: React.FC = observer(() => {
       </IngredientsWrapper>
 
       <Button type="button" onClick={addIngredient}>
-        + add ingredient
+        + Add Ingredient
       </Button>
-      <Button>submit</Button>
+      <Button>Save</Button>
     </Form>
   );
 });
