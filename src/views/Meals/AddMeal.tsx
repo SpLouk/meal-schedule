@@ -8,9 +8,10 @@ import { IIngredient } from "../../types/IIngredient";
 import { Row } from "../../lib/Row";
 import { Typography } from "../../lib/Typography";
 import { Column } from "../../lib/Column";
-import { Input } from "../../lib/Input";
+import {Input, Select} from "../../lib/Input";
 import colour from "../../lib/colour";
 import { Button } from "../../lib/Button";
+import { INGREDIENT_UNITS } from "../../lib/consts";
 
 const Form = styled.form`
   flex: 1;
@@ -78,7 +79,9 @@ export const AddMeal: React.FC = observer(() => {
     setName(target.value);
   }
 
-  function handleChangeIngredient(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeIngredient(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     const { name, value } = e.target;
     const [index, field] = name.split(".");
     setIngredients((prevState) => {
@@ -131,6 +134,7 @@ export const AddMeal: React.FC = observer(() => {
               </label>
               <Input
                 type="number"
+                step="0.01"
                 name={`${index}.quantity`}
                 value={ingredient.quantity}
                 onChange={handleChangeIngredient}
@@ -140,12 +144,14 @@ export const AddMeal: React.FC = observer(() => {
               <label htmlFor={`${index}.unit`}>
                 <Typography>Unit</Typography>
               </label>
-              <Input
-                type="text"
-                name={`${index}.unit`}
-                value={ingredient.unit}
-                onChange={handleChangeIngredient}
-              />
+              <Select name={`${index}.unit`} onChange={handleChangeIngredient}>
+                <option value=""></option>
+                {INGREDIENT_UNITS.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </Select>
             </IngredientColumn>
           </IngredientRow>
         ))}
