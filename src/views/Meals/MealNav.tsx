@@ -6,10 +6,16 @@ import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import path, { mealPath } from "../../lib/path";
 import colour from "../../lib/colour";
+import { media } from "../../lib/media";
 
 const MealList = styled.ul`
   display: flex;
   flex-direction: column;
+  padding-bottom: 16px;
+
+  ${media.lessThan("tablet")`
+    flex-direction: row;
+  `}
 `;
 
 const NavLink = styled(Link)<{ active?: boolean }>`
@@ -17,6 +23,8 @@ const NavLink = styled(Link)<{ active?: boolean }>`
   text-align: center;
   padding: 16px;
   border-bottom: 1px solid ${colour.lightBlue};
+  border-right: 1px solid ${colour.lightBlue};
+
   ${(props) => props.active && `background: ${colour.lightBlue}`};
 `;
 

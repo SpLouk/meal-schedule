@@ -31,6 +31,10 @@ const Header = styled.header`
 const Content = styled.main`
   display: flex;
   flex: 1;
+
+  ${media.lessThan("tablet")`
+    flex-direction: column;
+  `}
 `;
 
 const Title = styled.h1`
@@ -42,10 +46,6 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   min-width: 300px;
-  border-right: 1px solid ${colour.lightBlue};
-  ${media.lessThan("tablet")`
-    display: none;
-  `}
 `;
 
 const ContentWrapper = styled(Row)`
