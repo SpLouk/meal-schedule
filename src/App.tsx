@@ -10,12 +10,7 @@ import { createBrowserHistory } from "history";
 import { Meals } from "./views/Meals";
 
 const ViewportWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-y: auto;

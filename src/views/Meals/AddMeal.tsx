@@ -10,16 +10,31 @@ import { Typography } from "../../lib/Typography";
 import { Column } from "../../lib/Column";
 import { Input } from "../../lib/Input";
 import colour from "../../lib/colour";
+import { Button } from "../../lib/Button";
 
 const Form = styled.form`
   flex: 1;
   background-color: ${colour.lightBlue};
   display: flex;
   flex-direction: column;
-  max-width: 900px;
+  max-width: 600px;
   padding: 64px;
   justify-content: space-between;
-  align-items: start;
+  align-items: stretch;
+`;
+
+const IngredientsWrapper = styled.div`
+  overflow: auto;
+  height: 300px;
+`;
+
+const IngredientColumn = styled(Column)`
+  flex: 1;
+  padding: 0 8px;
+`;
+
+const NameColumn = styled(IngredientColumn)`
+  flex: 2;
 `;
 
 const IngredientRow = styled(Row)`
@@ -96,47 +111,50 @@ export const AddMeal: React.FC = observer(() => {
         />
       </Column>
       <h3>Ingredients</h3>
-      {ingredients.map((ingredient, index) => (
-        <IngredientRow key={index}>
-          <Column>
-            <label htmlFor={`${index}.name`}>
-              <Typography>Name</Typography>
-            </label>
-            <Input
-              type="text"
-              name={`${index}.name`}
-              value={ingredient.name}
-              onChange={handleChangeIngredient}
-            />
-          </Column>
-          <Column>
-            <label htmlFor={`${index}.quantity`}>
-              <Typography>Quantity</Typography>
-            </label>
-            <Input
-              type="number"
-              name={`${index}.quantity`}
-              value={ingredient.quantity}
-              onChange={handleChangeIngredient}
-            />
-          </Column>
-          <Column>
-            <label htmlFor={`${index}.unit`}>
-              <Typography>Unit</Typography>
-            </label>
-            <Input
-              type="text"
-              name={`${index}.unit`}
-              value={ingredient.unit}
-              onChange={handleChangeIngredient}
-            />
-          </Column>
-        </IngredientRow>
-      ))}
-      <button type="button" onClick={addIngredient}>
+      <IngredientsWrapper>
+        {ingredients.map((ingredient, index) => (
+          <IngredientRow key={index}>
+            <NameColumn>
+              <label htmlFor={`${index}.name`}>
+                <Typography>Name</Typography>
+              </label>
+              <Input
+                type="text"
+                name={`${index}.name`}
+                value={ingredient.name}
+                onChange={handleChangeIngredient}
+              />
+            </NameColumn>
+            <IngredientColumn>
+              <label htmlFor={`${index}.quantity`}>
+                <Typography>Quantity</Typography>
+              </label>
+              <Input
+                type="number"
+                name={`${index}.quantity`}
+                value={ingredient.quantity}
+                onChange={handleChangeIngredient}
+              />
+            </IngredientColumn>
+            <IngredientColumn>
+              <label htmlFor={`${index}.unit`}>
+                <Typography>Unit</Typography>
+              </label>
+              <Input
+                type="text"
+                name={`${index}.unit`}
+                value={ingredient.unit}
+                onChange={handleChangeIngredient}
+              />
+            </IngredientColumn>
+          </IngredientRow>
+        ))}
+      </IngredientsWrapper>
+
+      <Button type="button" onClick={addIngredient}>
         + add ingredient
-      </button>
-      <button>submit</button>
+      </Button>
+      <Button>submit</Button>
     </Form>
   );
 });

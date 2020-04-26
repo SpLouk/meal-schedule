@@ -1,5 +1,7 @@
 export default {
-    slate: '#666666',
-    stone: '#aaaaaa',
-    lightBlue: '#ebfbfb',
+  black: "#333",
+  slate: "#666",
+  stone: "#aaa",
+  lightBlue: "#f0f2fb",
+  white: "#fff",
 };
