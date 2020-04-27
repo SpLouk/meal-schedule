@@ -23,7 +23,7 @@ const Form = styled.form`
   padding: 64px;
   justify-content: space-between;
   align-items: stretch;
-  
+
   ${media.lessThan("mobile")`
     padding: 16px;
   `}
@@ -32,7 +32,7 @@ const Form = styled.form`
 const IngredientsWrapper = styled.div`
   overflow: auto;
   height: 300px;
-  
+
   ${media.lessThan("mobile")`
     height: unset;
   `}
@@ -40,7 +40,8 @@ const IngredientsWrapper = styled.div`
 
 const IngredientColumn = styled(Column)`
   flex: 1;
-  padding: 0 8px;
+  margin: 0 8px;
+  width: 100%;
 `;
 
 const NameColumn = styled(IngredientColumn)`
@@ -49,11 +50,25 @@ const NameColumn = styled(IngredientColumn)`
 
 const IngredientRow = styled(Row)`
   justify-content: space-evenly;
+  align-items: center;
   width: 100%;
 
   ${media.lessThan("mobile")`
     flex-direction: column;
     margin-bottom: 32px;
+  `}
+`;
+
+const RemoveIngredientButton = styled.button`
+  background: none;
+  border: none;
+  border-bottom: 1px solid ${colour.slate};
+  padding: 0;
+  margin: 0 16px;
+  height: min-content;
+  
+  ${media.lessThan("mobile")`
+    margin: 16px;
   `}
 `;
 
@@ -124,6 +139,14 @@ export const MealForm: React.FC<IProps> = observer(({ meal, onSave }) => {
     setIngredients((prevState) => [...prevState, newIngredient()]);
   }
 
+  function removeIngredient(index: number) {
+    setIngredients((prevState) => {
+      const newState = prevState.slice();
+      newState.splice(index, 1);
+      return newState;
+    });
+  }
+
   return (
     <Form onSubmit={onSubmit}>
       {meal === undefined ? <h2>Add a new meal</h2> : <h2>Edit {name}</h2>}
@@ -183,6 +206,12 @@ export const MealForm: React.FC<IProps> = observer(({ meal, onSave }) => {
                 ))}
               </Select>
             </IngredientColumn>
+            <RemoveIngredientButton
+              type="button"
+              onClick={() => removeIngredient(index)}
+            >
+              Remove Ingredient
+            </RemoveIngredientButton>
           </IngredientRow>
         ))}
       </IngredientsWrapper>
