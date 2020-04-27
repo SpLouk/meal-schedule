@@ -52,6 +52,11 @@ export class MealStore {
     await this.fetchMeals();
     return this.mealsById[id!];
   };
+
+  deleteMeal = async (meal: IMeal): Promise<void> => {
+    await this.collection.doc(meal.id).delete();
+    await this.fetchMeals();
+  }
 }
 
 export const MealStoreContext = createContext<MealStore>({} as MealStore);

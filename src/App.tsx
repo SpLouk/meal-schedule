@@ -81,6 +81,9 @@ export const App: React.FC = observer(() => {
                 <Route path={path.meals}>
                   <Meals />
                 </Route>
+                <Route path={path.calendar}>
+                  {/*<Calendar />*/}
+                </Route>
                 <Redirect to={path.meals} />
               </Switch>
             </ContentWrapper>

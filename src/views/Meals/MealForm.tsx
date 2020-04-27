@@ -12,6 +12,7 @@ import { Input, Select } from "../../lib/Input";
 import colour from "../../lib/colour";
 import { Button } from "../../lib/Button";
 import { INGREDIENT_UNITS } from "../../lib/consts";
+import { media } from "../../lib/media";
 
 const Form = styled.form`
   flex: 1;
@@ -22,11 +23,19 @@ const Form = styled.form`
   padding: 64px;
   justify-content: space-between;
   align-items: stretch;
+  
+  ${media.lessThan("mobile")`
+    padding: 16px;
+  `}
 `;
 
 const IngredientsWrapper = styled.div`
   overflow: auto;
   height: 300px;
+  
+  ${media.lessThan("mobile")`
+    height: unset;
+  `}
 `;
 
 const IngredientColumn = styled(Column)`
@@ -41,6 +50,11 @@ const NameColumn = styled(IngredientColumn)`
 const IngredientRow = styled(Row)`
   justify-content: space-evenly;
   width: 100%;
+
+  ${media.lessThan("mobile")`
+    flex-direction: column;
+    margin-bottom: 32px;
+  `}
 `;
 
 function newIngredient(): IIngredient {

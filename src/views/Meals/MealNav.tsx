@@ -12,20 +12,22 @@ const MealList = styled.ul`
   display: flex;
   flex-direction: column;
   padding-bottom: 16px;
+  flex-wrap: wrap;
+  background: ${colour.white};
 
   ${media.lessThan("tablet")`
     flex-direction: row;
   `}
 `;
 
-const NavLink = styled(Link)<{ active?: boolean }>`
+const NavLink = styled(Link)<{$active?: boolean}>`
   display: block;
   text-align: center;
   padding: 16px;
   border-bottom: 1px solid ${colour.lightBlue};
   border-right: 1px solid ${colour.lightBlue};
 
-  ${(props) => props.active && `background: ${colour.lightBlue}`};
+  background: ${(props) => (props.$active ? colour.lightBlue : colour.white)};
 `;
 
 export const MealNav: React.FC = observer(() => {
@@ -39,7 +41,7 @@ export const MealNav: React.FC = observer(() => {
       {meals.map((meal, index) => (
         <li key={index}>
           <NavLink
-            active={location.pathname === mealPath(meal.id!)}
+            $active={location.pathname === mealPath(meal.id!)}
             to={mealPath(meal.id!)}
           >
             {meal.name}
@@ -47,7 +49,7 @@ export const MealNav: React.FC = observer(() => {
         </li>
       ))}
       <li>
-        <NavLink active={location.pathname === path.newMeal} to={path.newMeal}>
+        <NavLink $active={location.pathname === path.newMeal} to={path.newMeal}>
           + New Meal
         </NavLink>
       </li>
